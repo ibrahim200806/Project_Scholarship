@@ -1,7 +1,51 @@
-import { StudentProfile, EligibilityCriteria } from '../types';
+import { EligibilityCriteria } from '../types';
+
+export function cn(...classes: (string | undefined | null | false)[]): string {
+  return classes.filter(Boolean).join(' ');
+}
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+export function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-IN', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+export function isDeadlineNear(deadline: string, days: number = 7): boolean {
+  const deadlineDate = new Date(deadline);
+  const today = new Date();
+  const diffTime = deadlineDate.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays <= days && diffDays >= 0;
+}
+
+export function getConfidenceLevel(score: number): { level: 'high' | 'medium' | 'low'; color: string } {
+  if (score >= 80) return { level: 'high', color: 'green' };
+  if (score >= 60) return { level: 'medium', color: 'yellow' };
+  return { level: 'low', color: 'red' };
+}
+
+export function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export function validatePhone(phone: string): boolean {
+  const phoneRegex = /^[6-9]\d{9}$/;
+  return phoneRegex.test(phone.replace(/\D/g, ''));
+}
 
 export function calculateMatchScore(
-  userProfile: StudentProfile,
+  userProfile: any,
   eligibility: EligibilityCriteria
 ): { score: number; matchingCriteria: string[]; missingCriteria: string[] } {
   const matchingCriteria: string[] = [];
@@ -52,7 +96,7 @@ export function calculateMatchScore(
   }
 
   return {
-    score: (score / totalCriteria) * 100,
+    score: Math.round((score / totalCriteria) * 100),
     matchingCriteria,
     missingCriteria
   };
