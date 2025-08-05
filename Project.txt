@@ -1,0 +1,364 @@
+1. User Flow (Registration → Profile Setup → Dashboard)
+a. Registration:
+Landing Page:
+
+Hero Section: Showcase the platform’s primary value proposition: "Unlock Scholarships in Tamil Nadu for Your Future".
+
+Call to Action (CTA): Prominent CTA buttons like "Sign Up" and "Learn More".
+
+Multi-language Support: Display buttons for switching between Tamil and English for accessibility.
+
+Sign-Up Process:
+
+Sign-Up Options: Allow registration via Email, Phone Number, or Social Media (Google/Facebook).
+
+OTP Verification: Once registered, send an OTP via SMS or email to verify the account.
+
+Consent Form: Ask for consent to collect sensitive data (caste, income, etc.) for matching scholarships. Include a link to the privacy policy.
+
+b. Profile Setup:
+Personal Information:
+
+Fields: Name, Age, Gender, Contact Details (Mobile, Email).
+
+Profile Image Upload: Option for students to upload a profile picture.
+
+Academic Information:
+
+Institution: College or school name.
+
+Stream/Discipline: Arts/Commerce/Science, etc.
+
+Academic Performance: Enter grades, CGPA, or percentage.
+
+Socioeconomic Information:
+
+Caste: Select SC/ST/OBC/General.
+
+Religion: Choose from a dropdown (if required).
+
+Family Income: Input annual family income range (e.g., ₹0-2 Lakhs).
+
+Disability Status: Yes/No.
+
+Document Upload:
+
+Upload Required Documents: Income certificate, caste certificate, disability certificate, etc.
+
+Secure Document Upload: Ensure documents are uploaded securely with encrypted storage.
+
+Completion Progress: Show a progress bar indicating how much of the profile is complete.
+
+c. Dashboard:
+Personalized Scholarship Feed:
+
+Top Picks for You: Based on profile matching, display the top 5 scholarships with relevant filters (e.g., deadlines, eligibility).
+
+Scholarship Categories: Group scholarships by State-Specific, Caste-Based, Merit-Based, Income-Based.
+
+Scholarship Information: Each scholarship listing should include the scholarship name, provider, eligibility criteria, amount, and application deadline.
+
+Application Status Tracker:
+
+Scholarships Applied For: Track scholarships the user has applied for, along with status (Pending, Approved, Expired).
+
+Deadline Alerts: Push notifications or emails to remind students about upcoming deadlines (set to 1 week, 3 days, and 1 day before).
+
+One-Click Application:
+
+Pre-fill the application forms wherever possible using data from the user’s profile, reducing manual input.
+
+2. AI Features (Web Scraping Logic → Matching Algorithm Pseudocode)
+a. Web Scraping Logic:
+Goal: Automatically scrape relevant scholarship information from government and private websites.
+
+Tools:
+
+BeautifulSoup: For static page scraping (to extract scholarship data from HTML content).
+
+Selenium: For dynamic content that requires JavaScript rendering (e.g., websites like National Scholarship Portal).
+
+Steps:
+
+List Scholarship Sources: Start with government scholarship portals (e.g., National Scholarship Portal, State Government Sites) and private scholarship portals (e.g., Unacademy, Chegg India).
+
+Scrape Data: Extract scholarship name, eligibility criteria, amount, application form link, and deadlines.
+
+Regular Updates: Schedule the scraper to run every 24-48 hours to keep the database updated.
+
+Data Storage: Store scraped data in the database (PostgreSQL or Firebase).
+
+b. Matching Algorithm (Scholarships → Student Profiles)
+Input: User profile data (caste, income, academic score).
+
+Process:
+
+Match on Caste: Check if the scholarship has caste-based eligibility and if the user matches.
+
+Income Range Matching: Ensure the student’s family income falls within the scholarship’s specified range.
+
+Academic Performance: Match scholarships requiring specific marks/grades with the student’s academic record.
+
+Disability Matching: Match if the scholarship requires a disability status.
+
+Pseudocode for the Matching Algorithm:
+
+python
+Copy
+Edit
+# Matching Algorithm Pseudo-code
+def match_scholarships(user_profile, scholarships):
+    matched_scholarships = []
+    
+    for scholarship in scholarships:
+        match_score = 0
+        
+        # Caste Matching
+        if scholarship['caste'] == user_profile['caste']:
+            match_score += 2
+        
+        # Income Range Matching
+        if scholarship['min_income'] <= user_profile['income'] <= scholarship['max_income']:
+            match_score += 2
+        
+        # Academic Performance Matching
+        if scholarship['min_grade'] <= user_profile['academic_score']:
+            match_score += 3
+        
+        # Disability Matching
+        if scholarship['disability_required'] == user_profile['disability_status']:
+            match_score += 1
+        
+        matched_scholarships.append((scholarship, match_score))
+    
+    # Sort scholarships by score (highest first)
+    matched_scholarships.sort(key=lambda x: x[1], reverse=True)
+    
+    return matched_scholarships[:10]  # Return top 10 scholarships
+Confidence Score: Provide a confidence score for each scholarship, indicating how well the student matches the eligibility.
+
+Filtered View: Show a filtered list of scholarships, sorted by relevance, to the user.
+
+3. Admin Panel Wireframe
+The Admin Panel should be intuitive and allow for easy management of users, scholarships, and analytics.
+
+a. User Management:
+Table Format: Display a table of users with the following columns:
+
+User ID
+
+Name
+
+Email
+
+Profile Completion Status
+
+Total Applications Submitted
+
+Document Verification Status
+
+Application Status
+
+Actions: View/Edit user profiles, flag discrepancies, approve/reject scholarship applications.
+
+b. Scholarship Management:
+Table Format: Display a list of scholarships with the following columns:
+
+Scholarship ID
+
+Scholarship Name
+
+Source (Government/Private)
+
+Eligibility Criteria
+
+Deadline
+
+Actions: Add/Edit scholarships manually (in case scraping fails), mark scholarships as outdated.
+
+c. Analytics Dashboard:
+User Engagement: Display charts showing the number of registered users, active users, and scholarships applied for.
+
+Scholarship Performance: Track the most matched scholarships and their success rate (i.e., number of successful applications).
+
+Trending Scholarships: Show which scholarships are most applied for, based on user data.
+
+4. Frontend Design Inspiration
+Color Scheme:
+
+Use Bharat-centric colors like Saffron (Orange), Green, and Maroon for vibrancy.
+
+Use Tamil motifs (like the Thamizh Thai icon) to create a connection with local culture.
+
+Typography:
+
+Use simple, clean fonts. Opt for Google Fonts like Roboto for English and Bamini/TAM for Tamil.
+
+Layout:
+
+Landing Page: Large hero section with prominent CTAs and a brief value proposition.
+
+Dashboard: Card-based layout for scholarships, with large, clickable cards for top scholarship recommendations. Use Tailwind CSS for responsive design.
+
+Multilingual Support: Ensure the platform offers Tamil and English language options for every page.
+
+5. Ethical Considerations for Handling Sensitive Data
+Data Encryption: Ensure that sensitive data (caste, religion, income) is encrypted at rest and in transit.
+
+User Consent: During profile setup, ask for explicit consent to collect and process personal data.
+
+Non-Discriminatory Matching: Make sure the AI models do not unintentionally favor or discriminate against students from specific communities or backgrounds.
+
+
+Core Features:
+Admin Scholarship URL Input and Automatic Scraping
+
+The admin can add a new scholarship website URL (government/private) to the system.
+
+The platform should automatically scrape the given URL for scholarships (name, eligibility, deadlines, etc.).
+
+Use scraping scripts (BeautifulSoup, Selenium, etc.) to extract the scholarship information and store it in the database.
+
+Notify the admin when scraping is complete and any errors are encountered (e.g., CAPTCHA, site structure issues).
+
+AI-driven categorization: Automatically categorize the scraped scholarships into merit-based, income-based, caste-based, etc.
+
+Real-Time Scholarship Updates:
+
+Scraped scholarships are stored in the database and available for both admin and user dashboards.
+
+Auto-Updates: The system should check and scrape the added scholarship URLs periodically (e.g., every 24-48 hours) for new scholarships or updated offers.
+
+Deadline Alerts: Users should receive notifications for scholarships they are eligible for based on their profiles. The platform will show scholarships with upcoming deadlines and send reminders to users (via email/SMS).
+
+AI-Powered Scholarship Matching:
+
+User Profile Matching: Use AI to match users' profiles (caste, income, academic scores) with available scholarships.
+
+Ranking System: Display scholarships with confidence scores based on how closely the user matches the eligibility criteria.
+
+Admin Dashboard:
+
+Manage Scholarships: Admin can see a list of all scraped scholarships, view details, and manage them (edit/update/remove).
+
+Scholarship Categories: Display scholarships by category (e.g., SC/ST, Merit-based, Income-based).
+
+Analytics Dashboard: Track the number of scholarships scraped, the number of active users, and user interactions with the platform.
+
+User Dashboard:
+
+Scholarship Feed: Display personalized scholarship recommendations based on the user’s profile (caste, income, academic performance).
+
+Application Tracker: Allow users to track the application status for each scholarship (Pending, Approved, Expired).
+
+Upcoming Deadlines: Show a list of scholarships with upcoming deadlines for each user, and notify them as deadlines approach.
+
+Detailed Steps for Admin-Scholarship URL Input & Automatic Scraping
+1. Admin Input:
+Scholarship URL Input:
+
+Admin can log into the admin dashboard and input a new URL (for government/private scholarship pages).
+
+A form is provided in the admin panel with fields like:
+
+Scholarship Website URL: Admin enters the URL.
+
+Category Selection: Admin selects the scholarship category (Merit-based, Income-based, etc.).
+
+Frequency of Scraping: Admin can set how often the platform should scrape the website (e.g., every 24 hours, weekly).
+
+Save URL: Upon saving, the system will attempt to scrape the scholarship data automatically.
+
+2. Automatic Scraping Process:
+Web Scraping Logic:
+
+The platform will begin scraping the provided URL. If the page is static, use BeautifulSoup. If dynamic, use Selenium or Puppeteer to render JavaScript content.
+
+Data Extraction: The scraper should identify and extract:
+
+Scholarship Name.
+
+Eligibility Criteria (Caste, Income, Academic requirements).
+
+Scholarship Amount.
+
+Application Deadline.
+
+Application Link.
+
+Additional Notes (if any, like documents required).
+
+AI Categorization:
+
+Use AI (e.g., NLP models like spaCy) to analyze the scraped content and automatically categorize scholarships.
+
+For example, scholarships with "SC/ST" in eligibility will be categorized under Caste-Based Scholarships.
+
+Categorization Example:
+
+Caste-based: “SC/ST/OBC”
+
+Merit-based: “Top scorers in Science”
+
+Income-based: “Family income less than ₹2 Lakhs”
+
+Data Storage:
+
+Once the data is extracted, it should be stored in the database (e.g., PostgreSQL or Firebase).
+
+Keep track of metadata like scraping time and last updated time.
+
+3. Notification to Admin:
+After scraping is complete:
+
+The admin will receive an email or dashboard notification saying that the scraping has been completed successfully or failed.
+
+If scraping failed due to a CAPTCHA or other issue, the admin will be notified with error details.
+
+The admin panel will display the status of scraped scholarships, with options to:
+
+Edit Scholarship: Update any incorrect details manually.
+
+Remove Scholarship: If the scholarship is outdated or incorrect.
+
+Re-scrape: For reattempting scraping of a URL if any issues are fixed.
+
+4. Automatic Update and Deadline Alerts:
+The system will run automated scripts to check for updates or new scholarships at the frequency set by the admin (e.g., every 24-48 hours).
+
+Deadlines: Scholarships with upcoming deadlines will be flagged and notified to users via email/SMS.
+
+Notifications should be sent when:
+
+1 week before the deadline.
+
+3 days before the deadline.
+
+1 day before the deadline.
+
+5. User Interaction:
+Users can see up-to-date scholarship offers based on their profile.
+
+Personalized Feed: Scholarships are recommended in the user dashboard based on how well they match their profile (e.g., caste, income, marks).
+
+Application Tracker: Users can track their scholarship applications and get notified of upcoming deadlines.
+
+Admin Panel Wireframe:
+a. Admin Dashboard:
+Add Scholarship URL: Input new scholarship website URL.
+
+Input form: Scholarship URL, Category, Frequency of Scraping.
+
+Action buttons: Save, Cancel.
+
+Scraped Scholarships List:
+
+Columns: Scholarship Name, Eligibility, Deadline, Status (Active/Expired).
+
+Actions: Edit, Remove, Re-scrape.
+
+Analytics:
+
+Total Scholarships Scraped: Show the total number of active scholarships.
+
+User Engagement: Display user interaction with scholarships (clicks, applications).
