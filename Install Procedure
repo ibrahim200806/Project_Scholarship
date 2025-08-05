@@ -1,0 +1,70 @@
+Copilot said: I'll help you run this TypeScript project
+I'll help you run this TypeScript project (Project_Scholarship) on Windows 10. Here's a step-by-step guide:
+
+Prerequisites Installation:
+bash
+# 1. Install Node.js and npm
+- Download Node.js from https://nodejs.org/ (LTS version recommended)
+- During installation, make sure to check "Automatically install the necessary tools"
+
+# 2. Verify installations in Command Prompt:
+node --version
+npm --version
+Project Setup:
+bash
+# 1. Clone the repository
+git clone https://github.com/ibrahim200806/Project_Scholarship.git
+cd Project_Scholarship
+
+# 2. Install dependencies
+npm install
+Running the Application:
+bash
+# Start the development server
+npm run dev
+
+# The application should start and be available at:
+# http://localhost:5173
+Building for Production:
+bash
+# Create production build
+npm run build
+
+# Preview production build
+npm run preview
+Additional Tips:
+
+Make sure you have a modern web browser installed (Chrome, Firefox, Edge)
+If you encounter any Node.js related errors:
+bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and reinstall
+rm -rf node_modules
+npm install
+If you get any TypeScript compilation errors:
+bash
+# Install TypeScript globally
+npm install -g typescript
+Project Structure:
+
+The project uses React.js 18 with TypeScript
+Styling is done with Tailwind CSS
+Routes are handled by React Router
+State management uses Context API
+Environment Requirements:
+
+Node.js 18 or higher
+npm (comes with Node.js)
+Modern web browser with JavaScript enabled
+The application includes features like:
+
+User authentication with OTP verification
+Profile management with document upload
+Scholarship matching system
+Dashboard with personalized feeds
+Multilingual support (Tamil/English)
+After starting the development server, the application will be accessible through your web browser at http://localhost:5173. Make sure all services (like authentication and database) are properly configured before running the application.
+
+Let me know if you encounter any specific errors or need additional help!

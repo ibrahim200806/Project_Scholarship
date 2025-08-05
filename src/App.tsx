@@ -1,97 +1,35 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { LanguageProvider } from './contexts/LanguageContext';
-import Layout from './components/Layout/Layout';
-import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register';
-import Dashboard from './pages/Dashboard/Dashboard';
-import ScholarshipsList from './pages/Scholarships/ScholarshipsList';
-import Profile from './pages/Profile/Profile';
-import Applications from './pages/Applications/Applications';
-import LoadingSpinner from './components/UI/LoadingSpinner';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-secondary-50 flex items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <>{children}</>;
+function Home() {
+  return <h2>🏠 Welcome to the Scholarship Portal</h2>;
 }
 
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-secondary-50 flex items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  return <>{children}</>;
+function Profile() {
+  return <h2>👤 Your Profile</h2>;
 }
 
-function AppRoutes() {
-  return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/login" element={
-        <PublicRoute>
-          <Login />
-        </PublicRoute>
-      } />
-      <Route path="/register" element={
-        <PublicRoute>
-          <Register />
-        </PublicRoute>
-      } />
-
-      {/* Protected Routes */}
-      <Route path="/" element={
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      }>
-        <Route index element={<Navigate to="/dashboard" replace />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="scholarships" element={<ScholarshipsList />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="applications" element={<Applications />} />
-      </Route>
-
-      {/* Catch all route */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
-  );
+function NotFound() {
+  return <h2>404 - Page Not Found</h2>;
 }
 
 function App() {
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <Router>
-          <div className="App">
-            <AppRoutes />
-          </div>
-        </Router>
-      </AuthProvider>
-    </LanguageProvider>
+    <Router>
+      <div style={{ padding: '2rem' }}>
+        <h1>🎓 Project Scholarship</h1>
+        <nav>
+          <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
+          <Link to="/profile">Profile</Link>
+        </nav>
+        <hr />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

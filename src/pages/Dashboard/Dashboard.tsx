@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, TrendingUp, Users, Award, Bell, ExternalLink, Star, Clock, MapPin } from 'lucide-react';
+import { Calendar, TrendingUp, Users, Award, Bell, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Scholarship, ScholarshipMatch, Notification } from '../../types';
@@ -154,124 +154,101 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Hero Welcome Section */}
-      <Card variant="gradient" className="hero-gradient text-white border-0">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center float-animation">
-                <Award className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold">
-                  {t('dashboard.welcome')}, {user?.name}!
-                </h1>
-                <p className="text-lg opacity-90 tamil-text">
-                  வணக்கம்! உங்கள் கல்வி கனவுகளை நனவாக்க உதவித்தொகைகளை கண்டறியுங்கள்
-                </p>
-              </div>
-            </div>
-            <p className="text-white opacity-90 text-lg">
-              Discover scholarships tailored specifically for Tamil Nadu students
-            </p>
-          </div>
-          
-          {!user?.isProfileComplete && (
-            <div className="mt-6 lg:mt-0">
-              <Button variant="secondary" size="lg" className="bg-white text-orange-600 hover:bg-orange-50">
-                <User className="w-5 h-5 mr-2" />
-                Complete Profile
-              </Button>
-            </div>
-          )}
+      {/* Welcome Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-secondary-900">
+            {t('dashboard.welcome')}, {user?.name}!
+          </h1>
+          <p className="mt-1 text-secondary-600">
+            Discover scholarships tailored for you
+          </p>
         </div>
-      </Card>
+        
+        {!user?.isProfileComplete && (
+          <div className="mt-4 sm:mt-0">
+            <Button variant="primary" size="sm">
+              Complete Profile
+            </Button>
+          </div>
+        )}
+      </div>
 
-      {/* Enhanced Stats Cards */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card variant="elevated" className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-              <Award className="h-8 w-8 text-white" />
+        <Card>
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <Award className="h-8 w-8 text-primary-600" />
             </div>
-          </div>
-          <p className="text-3xl font-bold text-secondary-900 mb-2">{stats.totalScholarships}</p>
-          <p className="text-sm font-medium text-secondary-600">Available Scholarships</p>
-          <div className="mt-2">
-            <Badge variant="info" className="text-xs">Updated Today</Badge>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-secondary-600">Available Scholarships</p>
+              <p className="text-2xl font-bold text-secondary-900">{stats.totalScholarships}</p>
+            </div>
           </div>
         </Card>
 
-        <Card variant="elevated" className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-              <TrendingUp className="h-8 w-8 text-white" />
+        <Card>
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <TrendingUp className="h-8 w-8 text-green-600" />
             </div>
-          </div>
-          <p className="text-3xl font-bold text-secondary-900 mb-2">{stats.appliedScholarships}</p>
-          <p className="text-sm font-medium text-secondary-600">Applications Submitted</p>
-          <div className="mt-2">
-            <Badge variant="warning" className="text-xs">2 Pending</Badge>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-secondary-600">Applications Submitted</p>
+              <p className="text-2xl font-bold text-secondary-900">{stats.appliedScholarships}</p>
+            </div>
           </div>
         </Card>
 
-        <Card variant="elevated" className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-              <Users className="h-8 w-8 text-white" />
+        <Card>
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <Users className="h-8 w-8 text-blue-600" />
             </div>
-          </div>
-          <p className="text-3xl font-bold text-secondary-900 mb-2">{stats.approvedApplications}</p>
-          <p className="text-sm font-medium text-secondary-600">Approved Applications</p>
-          <div className="mt-2">
-            <Badge variant="success" className="text-xs">1 Approved</Badge>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-secondary-600">Approved Applications</p>
+              <p className="text-2xl font-bold text-secondary-900">{stats.approvedApplications}</p>
+            </div>
           </div>
         </Card>
 
-        <Card variant="elevated" className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
-              <Calendar className="h-8 w-8 text-white" />
+        <Card>
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <Calendar className="h-8 w-8 text-yellow-600" />
             </div>
-          </div>
-          <p className="text-2xl font-bold text-secondary-900 mb-2">{formatCurrency(stats.totalAmount)}</p>
-          <p className="text-sm font-medium text-secondary-600">Total Scholarship Value</p>
-          <div className="mt-2">
-            <Badge variant="info" className="text-xs">Available</Badge>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-secondary-600">Total Scholarship Value</p>
+              <p className="text-2xl font-bold text-secondary-900">{formatCurrency(stats.totalAmount)}</p>
+            </div>
           </div>
         </Card>
       </div>
 
-      {/* Enhanced Notifications */}
+      {/* Notifications */}
       {notifications.filter(n => !n.isRead).length > 0 && (
-        <Card variant="elevated" className="border-l-4 border-orange-500">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-secondary-900 flex items-center">
-              <Bell className="w-6 h-6 mr-3 text-orange-600" />
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-secondary-900 flex items-center">
+              <Bell className="w-5 h-5 mr-2 text-primary-600" />
               Recent Notifications
             </h2>
-            <Badge variant="danger" className="pulse-orange">
+            <Badge variant="info">
               {notifications.filter(n => !n.isRead).length} new
             </Badge>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {notifications.filter(n => !n.isRead).slice(0, 3).map((notification) => (
-              <div key={notification.id} className="flex items-start space-x-4 p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200">
+              <div key={notification.id} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
                 <div className="flex-shrink-0">
-                  <div className="w-3 h-3 bg-orange-500 rounded-full mt-2 pulse-orange"></div>
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-secondary-900">{notification.title}</p>
-                  <p className="text-sm text-secondary-700 mt-1">{notification.message}</p>
-                  <div className="flex items-center space-x-4 mt-2">
-                    <p className="text-xs text-secondary-500 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" />
-                      {formatDate(notification.createdAt)}
-                    </p>
-                    <Button variant="ghost" size="sm" className="text-xs">
-                      View Details
-                    </Button>
-                  </div>
+                  <p className="text-sm font-medium text-secondary-900">{notification.title}</p>
+                  <p className="text-sm text-secondary-600">{notification.message}</p>
+                  <p className="text-xs text-secondary-500 mt-1">
+                    {formatDate(notification.createdAt)}
+                  </p>
                 </div>
               </div>
             ))}
@@ -279,44 +256,31 @@ export default function Dashboard() {
         </Card>
       )}
 
-      {/* Enhanced Upcoming Deadlines */}
+      {/* Upcoming Deadlines */}
       {upcomingDeadlines.length > 0 && (
-        <Card variant="elevated" className="border-l-4 border-red-500">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-secondary-900 flex items-center">
-              <Clock className="w-6 h-6 mr-3 text-red-600" />
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-secondary-900">
               {t('dashboard.upcomingDeadlines')}
             </h2>
-            <Badge variant="danger" className="animate-pulse">
+            <Badge variant="warning">
               {upcomingDeadlines.length} urgent
             </Badge>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {upcomingDeadlines.map((match) => (
-              <div key={match.scholarship.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-xl">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <Award className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-secondary-900">{match.scholarship.name}</p>
-                    <div className="flex items-center space-x-4 mt-1">
-                      <p className="text-sm text-secondary-600 flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        Deadline: {formatDate(match.scholarship.applicationDeadline)}
-                      </p>
-                      <p className="text-sm font-semibold text-green-600">
-                        {formatCurrency(match.scholarship.amount)}
-                      </p>
-                    </div>
-                  </div>
+              <div key={match.scholarship.id} className="flex items-center justify-between p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div>
+                  <p className="font-medium text-secondary-900">{match.scholarship.name}</p>
+                  <p className="text-sm text-secondary-600">
+                    Deadline: {formatDate(match.scholarship.applicationDeadline)}
+                  </p>
                 </div>
                 <Button
                   variant="primary"
-                  size="md"
+                  size="sm"
                   onClick={() => handleApplyScholarship(match.scholarship.id)}
-                  rightIcon={<ExternalLink className="w-4 h-4" />}
-                  className="pulse-orange"
+                  rightIcon={<ExternalLink className="w-3 h-3" />}
                 >
                   Apply Now
                 </Button>
@@ -326,22 +290,18 @@ export default function Dashboard() {
         </Card>
       )}
 
-      {/* Enhanced Recommended Scholarships */}
+      {/* Recommended Scholarships */}
       <div>
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-secondary-900 flex items-center">
-              <Star className="w-7 h-7 mr-3 text-orange-600" />
-              {t('dashboard.recommendedScholarships')}
-            </h2>
-            <p className="text-secondary-600 mt-1">Scholarships matched to your profile</p>
-          </div>
-          <Button variant="outline" size="md">
-            View All Scholarships
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-secondary-900">
+            {t('dashboard.recommendedScholarships')}
+          </h2>
+          <Button variant="outline" size="sm">
+            View All
           </Button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {scholarships.slice(0, 6).map((match) => (
             <ScholarshipCard
               key={match.scholarship.id}
@@ -353,25 +313,6 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <Card variant="gradient" className="text-center">
-        <h3 className="text-xl font-bold text-secondary-900 mb-6">Quick Actions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Button variant="primary" size="lg" fullWidth>
-            <Award className="w-5 h-5 mr-2" />
-            Browse All Scholarships
-          </Button>
-          <Button variant="secondary" size="lg" fullWidth>
-            <User className="w-5 h-5 mr-2" />
-            Update Profile
-          </Button>
-          <Button variant="outline" size="lg" fullWidth>
-            <Bell className="w-5 h-5 mr-2" />
-            View Applications
-          </Button>
-        </div>
-      </Card>
     </div>
   );
 }

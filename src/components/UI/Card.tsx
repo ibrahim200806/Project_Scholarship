@@ -5,17 +5,9 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'elevated' | 'gradient';
-  hover?: boolean;
 }
 
-export default function Card({ 
-  children, 
-  className, 
-  padding = 'md', 
-  variant = 'default',
-  hover = true 
-}: CardProps) {
+export default function Card({ children, className, padding = 'md' }: CardProps) {
   const paddingClasses = {
     none: '',
     sm: 'p-4',
@@ -23,29 +15,8 @@ export default function Card({
     lg: 'p-8'
   };
 
-  const variantClasses = {
-    default: 'bg-white rounded-2xl shadow-lg border border-orange-100',
-    elevated: 'bg-white rounded-2xl shadow-xl border border-orange-100 transform',
-    gradient: 'bg-gradient-to-br from-white to-orange-50 rounded-2xl shadow-lg border border-orange-200'
-  };
-
-  const hoverClasses = hover ? {
-    default: 'hover:shadow-xl transition-shadow duration-300',
-    elevated: 'hover:shadow-2xl hover:-translate-y-1 transition-all duration-300',
-    gradient: 'hover:shadow-xl hover:from-white hover:to-orange-100 transition-all duration-300'
-  } : {
-    default: '',
-    elevated: '',
-    gradient: ''
-  };
-
   return (
-    <div className={cn(
-      variantClasses[variant],
-      paddingClasses[padding],
-      hoverClasses[variant],
-      className
-    )}>
+    <div className={cn('bg-white rounded-xl shadow-sm border border-secondary-200', paddingClasses[padding], className)}>
       {children}
     </div>
   );
